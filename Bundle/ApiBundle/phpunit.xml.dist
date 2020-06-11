@@ -1,0 +1,12 @@
+<phpunit bootstrap="../../../../vendor/autoload.php">
+<php>
+    <server name="KERNEL_DIR" value="../../../../../app/"/>
+    <server name="KERNEL_CLASS" value="ApiKernel"/>
+</php>
+<testsuites name="Api Bundle Test">
+    <directory>
+        ./
+    </directory>
+</testsuites>
+<swiftmailer:config disable-delivery="true"/>
+</phpunit>

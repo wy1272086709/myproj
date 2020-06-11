@@ -1,0 +1,38 @@
+services:
+#     default configuration for services in *this* file
+#    _defaults:
+#        # automatically injects dependencies in your services
+#        autowire: true
+##        # automatically registers your services as commands, event subscribers, etc.
+#        autoconfigure: true
+##        # this means you cannot fetch services directly from the container via $container->get()
+##        # if you need to do this, you can override this setting on individual services
+#        public: false
+#    ApiBundle\Controller\:
+#        resource: '../../src/To8to/Bundle/ApiBundle/Controller'
+#        public: true
+#        tags: ['controller.service_arguments']
+#        parent: ApiBundle\Controller\BaseController
+
+    api_exception_subscriber:
+        class: ApiBundle\EventListener\ApiExceptionSubscriber
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    symfony.http_request:
+        class: Symfony\Component\HttpFoundation\Request
+    app.api_base_controller:
+        class: ApiBundle\Controller\BaseController
+        abstract: true
+#        properties:
+#            request: 'symfony.http_request'
+        calls:
+            - [setRequest, ['symfony.http_request']]
+#            - [setRequest: ['@symfony.http_request']]
+
+    app.api_collection_controller:
+        class: ApiBundle\Controller\CollectionController
+        parent: 'app.api_base_controller'
+
